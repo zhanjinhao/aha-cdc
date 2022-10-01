@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.addenda</groupId>
+    <artifactId>aha-cdc</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <slf4j.version>1.7.36</slf4j.version>
+        <business-easy.version>2.0.0</business-easy.version>
+        <relational-operations-grammar.version>2.3.2-SNAPSHOT</relational-operations-grammar.version>
+        <expression-calculator.version>1.0.1-SNAPSHOT</expression-calculator.version>
+        <junit.version>4.13.2</junit.version>
+        <mysql.version>8.0.27</mysql.version>
+    </properties>
+
+    <dependencies>
+        <!--基础依赖-->
+        <dependency>
+            <groupId>cn.addenda</groupId>
+            <artifactId>business-easy</artifactId>
+            <version>${business-easy.version}</version>
+        </dependency>
+
+        <!--SQL解析器-->
+        <dependency>
+            <groupId>cn.addenda</groupId>
+            <artifactId>relational-operations-grammar</artifactId>
+            <version>${relational-operations-grammar.version}</version>
+        </dependency>
+
+        <!--表达式计算器-->
+        <dependency>
+            <groupId>cn.addenda</groupId>
+            <artifactId>expression-calculator</artifactId>
+            <version>${expression-calculator.version}</version>
+        </dependency>
+
+        <!--slf4j-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--junit依赖-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--mysql依赖-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
