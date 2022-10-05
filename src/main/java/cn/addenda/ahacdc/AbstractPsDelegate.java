@@ -138,7 +138,7 @@ public abstract class AbstractPsDelegate implements PsDelegate {
                 + keyColumn + " "
                 + "from "
                 + tableName + " "
-                + SqlUtils.extractWhereConditionFromUpdateOrDeleteSql(executableSql) + " "
+                + SqlUtils.extractWhereConditionFromUpdateOrDeleteSql(executableSql, true) + " "
                 + "for update";
     }
 

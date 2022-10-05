@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
  */
 public class UpdatePsDelegate extends AbstractPsDelegate {
 
+    private final int leastTxIsolation;
+
     /**
      * 这些列必须从数据库里面取。
      */
@@ -37,11 +39,12 @@ public class UpdatePsDelegate extends AbstractPsDelegate {
         BinaryResult<List<String>, List<BinaryResult<String, Curd>>> binaryResult = sqlHelper.divideColumnFromUpdateOrInsertSql(parameterizedSql);
         dependentColumnList = binaryResult.getFirstResult();
         calculableColumnList = binaryResult.getSecondResult().stream().map(BinaryResult::getFirstResult).collect(Collectors.toList());
+        leastTxIsolation = sqlHelper.analysisLeastTxIsolation(parameterizedSql, keyColumn);
     }
 
     @Override
     protected <T> void doAssert(List<String> executableSqlList, PsInvocation<T> pi) throws SQLException {
-        assertTxIsolationNotLessThan(Connection.TRANSACTION_REPEATABLE_READ);
+        assertTxIsolationNotLessThan(leastTxIsolation);
         // 对于batch模式，需要是 stable sql
         if (executableSqlList.size() > 1) {
             assertStableUpdateSql(parameterizedSql);

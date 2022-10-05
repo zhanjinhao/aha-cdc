@@ -17,9 +17,12 @@ import cn.addenda.ro.grammar.lexical.scan.DefaultScanner;
 import cn.addenda.ro.grammar.lexical.scan.TokenSequence;
 import cn.addenda.ro.grammar.lexical.token.Token;
 import cn.addenda.ro.grammar.lexical.token.TokenType;
+import sun.security.krb5.internal.PAData;
 
 import java.math.BigInteger;
+import java.sql.Connection;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -28,7 +31,7 @@ import java.util.stream.Collectors;
  */
 public class SqlHelper {
 
-    private FunctionCalculator functionCalculator;
+    private final FunctionCalculator functionCalculator;
 
     public SqlHelper(FunctionCalculator functionCalculator) {
         this.functionCalculator = functionCalculator;
@@ -398,6 +401,22 @@ public class SqlHelper {
         }
         sb.append("'");
         return sb.toString();
+    }
+
+
+    private static final Map<String, KeyInOrKeyEqualConditionVisitor> keyInOrKeyEqualConditionVisitorMap = new ConcurrentHashMap<>();
+
+    public int analysisLeastTxIsolation(String parameterizedSql, String keyColumn) {
+        String whereCondition = SqlUtils.extractWhereConditionFromUpdateOrDeleteSql(parameterizedSql, false);
+        if (whereCondition.length() == 0) {
+            return Connection.TRANSACTION_REPEATABLE_READ;
+        }
+        KeyInOrKeyEqualConditionVisitor visitor = keyInOrKeyEqualConditionVisitorMap.computeIfAbsent(keyColumn, s -> new KeyInOrKeyEqualConditionVisitor(keyColumn));
+        if (Boolean.TRUE.equals(CurdUtils.parseExpression(whereCondition, functionCalculator, false).accept(visitor))) {
+            return Connection.TRANSACTION_READ_COMMITTED;
+        } else {
+            return Connection.TRANSACTION_REPEATABLE_READ;
+        }
     }
 
 }

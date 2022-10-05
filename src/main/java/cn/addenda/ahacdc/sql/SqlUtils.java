@@ -47,8 +47,8 @@ public class SqlUtils {
         boolean tableNamePreTokenFg = false;
         for (Token token : source) {
             if (TokenType.UPDATE.equals(token.getType()) ||
-                TokenType.INTO.equals(token.getType()) ||
-                TokenType.FROM.equals(token.getType())) {
+                    TokenType.INTO.equals(token.getType()) ||
+                    TokenType.FROM.equals(token.getType())) {
                 tableNamePreTokenFg = true;
                 continue;
             }
@@ -64,7 +64,7 @@ public class SqlUtils {
      * 从 Update or Delete SQL 里面提取出来 where 条件。
      * 其他语句抛出异常。
      */
-    public static String extractWhereConditionFromUpdateOrDeleteSql(String sql) {
+    public static String extractWhereConditionFromUpdateOrDeleteSql(String sql, boolean remainWherePrefix) {
         if (!isUpdateSql(sql) && !isDeleteSql(sql)) {
             throw new CdcException("only support update or delete sql. ");
         }
@@ -76,6 +76,9 @@ public class SqlUtils {
             TokenType type = token.getType();
             if (TokenType.WHERE.equals(type)) {
                 wherePreTokenFg = true;
+                if (!remainWherePrefix) {
+                    continue;
+                }
             }
             Object literal = token.getLiteral();
             if (wherePreTokenFg && !TokenType.EOF.equals(type)) {

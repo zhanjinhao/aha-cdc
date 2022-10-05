@@ -2,7 +2,6 @@ package cn.addenda.ahacdc;
 
 import cn.addenda.businesseasy.util.BEListUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,13 +16,16 @@ import java.util.Set;
  */
 public class DeletePsDelegate extends AbstractPsDelegate {
 
+    private final int leastTxIsolation;
+
     public DeletePsDelegate(CdcConnection cdcConnection, PreparedStatement ps, TableConfig tableConfig, String parameterizedSql) {
         super(cdcConnection, ps, tableConfig, parameterizedSql);
+        leastTxIsolation = sqlHelper.analysisLeastTxIsolation(parameterizedSql, keyColumn);
     }
 
     @Override
     protected <T> void doAssert(List<String> executableSqlList, PsInvocation<T> pi) throws SQLException {
-        assertTxIsolationNotLessThan(Connection.TRANSACTION_REPEATABLE_READ);
+        assertTxIsolationNotLessThan(leastTxIsolation);
     }
 
     @Override

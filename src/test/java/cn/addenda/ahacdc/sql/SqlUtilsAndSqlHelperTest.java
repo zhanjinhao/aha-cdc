@@ -43,11 +43,11 @@ public class SqlUtilsAndSqlHelperTest {
     @Test
     public void test3() {
         System.out.println(SqlUtils.extractWhereConditionFromUpdateOrDeleteSql(
-                "delete from score where CREATE_TM  < date_add( now(),  interval 1 day )   and DEGREE  + 1  < 60 - 1"));
+                "delete from score where CREATE_TM  < date_add( now(),  interval 1 day )   and DEGREE  + 1  < 60 - 1", true));
         System.out.println(SqlUtils.extractWhereConditionFromUpdateOrDeleteSql(
-                "update runoob_tbl set runoob_title=replace( runoob_title , 'c++', 'python' ) , a=?  + 1 , b=?"));
+                "update runoob_tbl set runoob_title=replace( runoob_title , 'c++', 'python' ) , a=?  + 1 , b=?", true));
         System.out.println(SqlUtils.extractWhereConditionFromUpdateOrDeleteSql(
-                "update runoob_tbl set runoob_title=replace( runoob_title , 'c++', 'python' )  where runoob_id  = 3"));
+                "update runoob_tbl set runoob_title=replace( runoob_title , 'c++', 'python' )  where runoob_id  = 3", true));
     }
 
     @Test
@@ -89,6 +89,16 @@ public class SqlUtilsAndSqlHelperTest {
         System.out.println(sqlHelper.toStorableSql(sql1));
         String sql2 = "select  group_concat (  DELETE_FLAG ,  CREATOR  + '1'  separator '\\'' ) as a from t_fp_day_navigation   group by DELETE_FLAG, CREATOR having  group_concat (  DELETE_FLAG  + '1'  order by CREATOR  asc separator ';' ) != ''  order by  ( '1' + DELETE_FLAG   )  desc";
         System.out.println(sqlHelper.toStorableSql(sql2));
+    }
+
+    @Test
+    public void test8() {
+        System.out.println(sqlHelper.analysisLeastTxIsolation("update A set b = 1 where a = 1 or a = 2", "a"));
+        System.out.println(sqlHelper.analysisLeastTxIsolation("update A set b = 1 where a in (1, 2)", "a"));
+        System.out.println(sqlHelper.analysisLeastTxIsolation("update A set b = 1 where a = 1 and a in (1, 2)", "a"));
+        System.out.println(sqlHelper.analysisLeastTxIsolation("update A set b = 1 where a <= 1", "a"));
+        System.out.println(sqlHelper.analysisLeastTxIsolation("update A set b = 1 where b = 1", "a"));
+        System.out.println(sqlHelper.analysisLeastTxIsolation("update A set b = 1 where b in (1)", "a"));
     }
 
 }
