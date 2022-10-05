@@ -75,7 +75,7 @@ public abstract class AbstractPsDelegate implements PsDelegate {
 
     protected void assertTxIsolationNotLessThan(int txIsolation) throws SQLException {
         if (cdcConnection.getDelegate().getTransactionIsolation() < txIsolation) {
-            throw new CdcException("tx isolation must not less than " + txIsolationStrMap.get(txIsolation) + ".");
+            throw new CdcException("tx isolation must not less than " + txIsolationStrMap.get(txIsolation) + ". sql: " + parameterizedSql + ". ");
         }
     }
 
