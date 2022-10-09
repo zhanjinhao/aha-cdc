@@ -2,10 +2,10 @@ package cn.addenda.ahacdc;
 
 import cn.addenda.ahacdc.format.DataFormatterRegistry;
 import cn.addenda.ahacdc.sql.SqlHelper;
-import cn.addenda.ahacdc.sql.SqlUtils;
 import cn.addenda.businesseasy.util.BEListUtil;
 import cn.addenda.ec.function.calculator.FunctionCalculator;
 import cn.addenda.ro.grammar.lexical.token.Token;
+import cn.addenda.ro.utils.SqlUtils;
 
 import java.sql.*;
 import java.util.ArrayList;

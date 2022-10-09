@@ -1,12 +1,11 @@
 package cn.addenda.ahacdc;
 
-import cn.addenda.ahacdc.sql.SqlUtils;
 import cn.addenda.businesseasy.asynctask.BinaryResult;
 import cn.addenda.businesseasy.util.BEListUtil;
 import cn.addenda.ro.grammar.ast.expression.Curd;
 import cn.addenda.ro.grammar.lexical.token.Token;
+import cn.addenda.ro.utils.SqlUtils;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;

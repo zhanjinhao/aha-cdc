@@ -1,6 +1,6 @@
 package cn.addenda.ahacdc;
 
-import cn.addenda.ahacdc.sql.SqlUtils;
+import cn.addenda.ro.utils.SqlUtils;
 
 import java.sql.SQLException;
 import java.sql.Statement;
