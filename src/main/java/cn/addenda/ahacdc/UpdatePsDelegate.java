@@ -1,10 +1,10 @@
 package cn.addenda.ahacdc;
 
 import cn.addenda.businesseasy.asynctask.BinaryResult;
-import cn.addenda.businesseasy.util.BEListUtil;
+import cn.addenda.businesseasy.util.BEListUtils;
 import cn.addenda.ro.grammar.ast.expression.Curd;
 import cn.addenda.ro.grammar.lexical.token.Token;
-import cn.addenda.ro.utils.SqlUtils;
+import cn.addenda.ro.util.SqlUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -79,7 +79,7 @@ public class UpdatePsDelegate extends AbstractPsDelegate {
 
                     // 进行 1:n -> 1:1 优化
                     if (dependentColumnList.isEmpty()) {
-                        List<List<Long>> listList = BEListUtil.splitList(keyValueList, IN_SIZE);
+                        List<List<Long>> listList = BEListUtils.splitList(keyValueList, IN_SIZE);
                         for (List<Long> item : listList) {
                             String rowCdcSql = SqlUtils.replaceDmlWhereSeg(executableSql, "where " + keyColumn + " in (" + longListToString(item) + ")");
                             rowCdcSqlList.add(sqlHelper.updateOrInsertUpdateColumnValue(rowCdcSql, Collections.EMPTY_MAP));
@@ -134,7 +134,7 @@ public class UpdatePsDelegate extends AbstractPsDelegate {
 
     private List<String> assembleRowUpdateSqlList(String updateSeg, List<Long> keyValueList) {
         List<String> rowCdcSqlList = new ArrayList<>();
-        List<List<Long>> listList = BEListUtil.splitList(keyValueList, IN_SIZE);
+        List<List<Long>> listList = BEListUtils.splitList(keyValueList, IN_SIZE);
         listList.forEach(item -> rowCdcSqlList.add(updateSeg + " where " + keyColumn + " in (" + longListToString(item) + ")"));
         return rowCdcSqlList;
     }

@@ -1,6 +1,6 @@
 package cn.addenda.ahacdc.sql;
 
-import cn.addenda.businesseasy.util.BEArrayUtil;
+import cn.addenda.businesseasy.util.BEArrayUtils;
 import cn.addenda.ro.grammar.ast.expression.*;
 import cn.addenda.ro.grammar.ast.expression.visitor.ExpressionVisitor;
 import cn.addenda.ro.grammar.lexical.token.Token;
@@ -70,7 +70,7 @@ public class WhereSegColumnVisitor extends ExpressionVisitor<Set<Token>> {
 
     @Override
     public Set<Token> visitIdentifier(Identifier identifier) {
-        return BEArrayUtil.asHashSet(identifier.getName());
+        return BEArrayUtils.asHashSet(identifier.getName());
     }
 
     @Override

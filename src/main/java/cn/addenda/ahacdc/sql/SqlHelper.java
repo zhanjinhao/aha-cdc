@@ -17,7 +17,7 @@ import cn.addenda.ro.grammar.lexical.scan.DefaultScanner;
 import cn.addenda.ro.grammar.lexical.scan.TokenSequence;
 import cn.addenda.ro.grammar.lexical.token.Token;
 import cn.addenda.ro.grammar.lexical.token.TokenType;
-import cn.addenda.ro.utils.SqlUtils;
+import cn.addenda.ro.util.SqlUtils;
 
 import java.math.BigInteger;
 import java.sql.Connection;

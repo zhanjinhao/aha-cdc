@@ -2,10 +2,10 @@ package cn.addenda.ahacdc;
 
 import cn.addenda.ahacdc.format.DataFormatterRegistry;
 import cn.addenda.ahacdc.sql.SqlHelper;
-import cn.addenda.businesseasy.util.BEListUtil;
+import cn.addenda.businesseasy.util.BEListUtils;
 import cn.addenda.ec.function.calculator.FunctionCalculator;
 import cn.addenda.ro.grammar.lexical.token.Token;
-import cn.addenda.ro.utils.SqlUtils;
+import cn.addenda.ro.util.SqlUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public abstract class AbstractPsDelegate implements PsDelegate {
         }
         List<String> resultColumnList = new ArrayList<>(columnList);
         resultColumnList.add(keyColumn);
-        List<List<Long>> listList = BEListUtil.splitList(keyValueList, IN_SIZE);
+        List<List<Long>> listList = BEListUtils.splitList(keyValueList, IN_SIZE);
         for (List<Long> item : listList) {
             int size = item.size();
             String keyInList = longListToString(item);
@@ -149,7 +149,7 @@ public abstract class AbstractPsDelegate implements PsDelegate {
 
         List<String> sqlList = new ArrayList<>();
         String sqlPreSegment = "insert into " + tableName + "_cdc_" + cdcMode + "(executable_sql) values";
-        List<List<String>> listList = BEListUtil.splitList(cdcSqlList, EXECUTE_INSERT_SQL_BATCH);
+        List<List<String>> listList = BEListUtils.splitList(cdcSqlList, EXECUTE_INSERT_SQL_BATCH);
         String aloneSql = null;
         for (List<String> item : listList) {
             StringBuilder sql = new StringBuilder(sqlPreSegment);

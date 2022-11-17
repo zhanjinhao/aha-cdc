@@ -1,6 +1,6 @@
 package cn.addenda.ahacdc;
 
-import cn.addenda.businesseasy.util.BEListUtil;
+import cn.addenda.businesseasy.util.BEListUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -54,7 +54,7 @@ public class DeletePsDelegate extends AbstractPsDelegate {
             // 对于simple模式 ： 1:n -> 1:1 优化；
             // 对于batch模式，也进行了： 1:1 -> n:1 优化。
             if (!keyValueSet.isEmpty()) {
-                List<List<Long>> listList = BEListUtil.splitList(new ArrayList<>(keyValueSet), IN_SIZE);
+                List<List<Long>> listList = BEListUtils.splitList(new ArrayList<>(keyValueSet), IN_SIZE);
                 for (List<Long> item : listList) {
                     rowCdcSqlList.add("delete from " + tableName + " where " + keyColumn + " in (" + longListToString(item) + ")");
                 }

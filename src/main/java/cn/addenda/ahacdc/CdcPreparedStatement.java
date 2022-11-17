@@ -1,7 +1,7 @@
 package cn.addenda.ahacdc;
 
 import cn.addenda.ahacdc.format.DataFormatterRegistry;
-import cn.addenda.businesseasy.util.BEArrayUtil;
+import cn.addenda.businesseasy.util.BEArrayUtils;
 import cn.addenda.ro.grammar.lexical.scan.DefaultScanner;
 import cn.addenda.ro.grammar.lexical.scan.TokenSequence;
 import cn.addenda.ro.grammar.lexical.token.Token;
@@ -70,17 +70,17 @@ public class CdcPreparedStatement extends AbstractCdcStatement<PreparedStatement
 
     @Override
     public boolean execute() throws SQLException {
-        return psDelegate.execute(BEArrayUtil.asArrayList(getExecutableSql()), delegate::execute);
+        return psDelegate.execute(BEArrayUtils.asArrayList(getExecutableSql()), delegate::execute);
     }
 
     @Override
     public int executeUpdate() throws SQLException {
-        return psDelegate.execute(BEArrayUtil.asArrayList(getExecutableSql()), delegate::executeUpdate);
+        return psDelegate.execute(BEArrayUtils.asArrayList(getExecutableSql()), delegate::executeUpdate);
     }
 
     @Override
     public long executeLargeUpdate() throws SQLException {
-        return psDelegate.execute(BEArrayUtil.asArrayList(getExecutableSql()), delegate::executeLargeUpdate);
+        return psDelegate.execute(BEArrayUtils.asArrayList(getExecutableSql()), delegate::executeLargeUpdate);
     }
 
     // ---------------------

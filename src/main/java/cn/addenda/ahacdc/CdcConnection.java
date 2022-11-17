@@ -1,6 +1,6 @@
 package cn.addenda.ahacdc;
 
-import cn.addenda.ro.utils.SqlUtils;
+import cn.addenda.ro.util.SqlUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
